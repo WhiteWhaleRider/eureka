@@ -36,3 +36,25 @@ dependencies {
     testCompile "org.mock-server:mockserver-netty:${mockserverVersion}"
     testCompile "com.netflix.governator:governator:${governatorVersion}"
 }
+
+version "1.7.2-mc"
+
+
+
+//publishing properties config in %gradle_home%/init.d/init.gradle
+//eg. allprojects {ext {publishMavenUserName = 'test'}}
+publishing {
+    repositories {
+        maven {
+            if (project.version.endsWith('-SNAPSHOT')) {
+                url "${publishSnapshotsMavenUrl}"
+            } else {
+                url "${publishReleasesMavenUrl}"
+            }
+            credentials {
+                username = "${publishMavenUserName}"
+                password = "${publishMavenpassword}"
+            }
+        }
+    }
+}
